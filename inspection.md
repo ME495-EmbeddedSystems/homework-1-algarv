@@ -74,7 +74,8 @@ If the nodes launched from the `launchfile` are not running, you will get incorr
 ## Package and Dependencies
 11. Use the ROS command `rossrv list | grep crazy_turtle` to list the types of services defined by `crazy_turtle`
     The output of the command looks like
-    ```crazy_turtle/Switch
+    ```
+    crazy_turtle/Switch
     ```
 12. Use the ROS command `rospack depends1` to list the immediate (direct) dependencies of `crazy_turtle`
    The output of the command looks like
