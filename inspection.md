@@ -6,19 +6,19 @@ exercise. Replace the the blanks marked with `${ITEM}` with your answer.
 Unless otherwise specified, list the command and all arguments that you passed to it.
 
 ## Setup Instructions
-1. Compile the workspace by executing `${insert command here}`
-2. Initialize the ROS environment (i.e., set the necessary ROS environment variables) by executing `${insert command here}`
+1. Compile the workspace by executing `${catkin_make}`
+2. Initialize the ROS environment (i.e., set the necessary ROS environment variables) by executing `${roscore}`
 3. Make sure no other ROS nodes are running prior to starting. 
-3. Run the launchfile `${location of launch file}` by executing `${insert command here}`
-4. When running you can see a visual depiction of the ROS graph using the `${command}` command.
+3. Run the launchfile `${crazy_turtle}` by executing `${roslaunch crazy_turtle go_crazy_turtle.launch}`
+4. When running you can see a visual depiction of the ROS graph using the `${rqt_graph}` command.
    The ROS graph, including all topics and node labels, looks like:
-   ![${The ROS Graph}](${path_to_image_here_include_image_in_your_repository})
+![${The ROS Graph}]('rqt_graph.png')
 
 ## Runtime Information
 The `launchfile` from above should be running at all times when executing these commands.
 If the nodes launched from the `launchfile` are not running, you will get incorrect results.
 
-5. Use the ROS command `${command and args}` to list all the nodes that are running.
+5. Use the ROS command `${rosnode_list}` to list all the nodes that are running.
    The output of the command looks like
    ```
    ${list nodes here}
