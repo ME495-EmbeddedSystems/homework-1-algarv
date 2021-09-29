@@ -1,4 +1,3 @@
 <launch>
    <node name="draw" pkg="turtle_control" type="std_srvs/Empty" />
-   </node>
 </launch>

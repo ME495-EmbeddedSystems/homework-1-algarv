@@ -19,6 +19,8 @@ class Draw:
 
 def main():
     rospy.init_node('draw')
+    reset = rospy.ServiceProxy("reset",Empty)
+    
     draw = Draw()
     rospy.spin()
 
