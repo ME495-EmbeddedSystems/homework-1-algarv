@@ -3,7 +3,8 @@
 import rospy
 from turtlesim.srv import Spawn
 from turtlesim.srv import Kill
-from turtlesim.srv import TeleportAbsolute as jump
+from turtlesim.srv import TeleportAbsolute
+from turtlesim.srv import TeleportRelative
 from std_srvs.srv import Empty
 
 #class Draw:
@@ -19,11 +20,21 @@ def main():
     pts = rospy.get_param("/waypoints")
     print(pts)
     rospy.init_node('draw')
-    reset = rospy.ServiceProxy("reset",Empty)
-    spawn = rospy.ServiceProxy("spawn",Spawn)
+    #reset = rospy.ServiceProxy("reset",Empty)
+    spawn = rospy.ServiceProxy("/spawn",Spawn)
+    jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
+    #spawn(0,0,0,"Turtle")
     for i in range(0,len(pts)):
-        jump()
-    rospy.spin()
+        x = pts[i][0]
+        y = pts[i][1]
+        jump(x+1,y+1,0)
+        #jump(x,y,0)
+        #jump(x-1,x-1,0)
+        #jump(x,y,0)
+        #jump(x-1,x+1,0)
+        #jump(x,y,0)
+        #jump(x+1,y-1,0)
+    #rospy.spin()
 
 if __name__ == '__main__':
     try:

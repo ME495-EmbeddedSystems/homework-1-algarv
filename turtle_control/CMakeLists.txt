@@ -7,10 +7,10 @@ project(turtle_control)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS turtlesim)
 
 ## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
+#find_package(Boost REQUIRED COMPONENTS system)
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -153,8 +153,8 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
- Mark executable scripts (Python etc.) for installation
- in contrast to setup.py, you can choose the destination
+ #Mark executable scripts (Python etc.) for installation
+ #in contrast to setup.py, you can choose the destination
  catkin_install_python(PROGRAMS
     #scripts/my_python_script
     DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
