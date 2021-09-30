@@ -1,3 +1,5 @@
 <launch>
-   <node name="draw" pkg="turtle_control" type="std_srvs/Empty" />
+    <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
+    <node name="draw" pkg="turtle_control" type="setup.py" />
+    <rosparam command="load" file="waypoint.yaml" />
 </launch>
