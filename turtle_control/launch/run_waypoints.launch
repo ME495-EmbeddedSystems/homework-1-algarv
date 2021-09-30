@@ -2,4 +2,6 @@
     <node name="turtle_node" pkg="turtlesim" type="turtlesim_node" />
     <node name="draw" pkg="turtle_control" type="setup.py" />
     <rosparam command="load" file="waypoint.yaml" />
+    <node name="translate" pkg="turtle_control" type="translate.py" />
+    <node name="follow" pkg="turtle_control" type="follow.py" />
 </launch>
