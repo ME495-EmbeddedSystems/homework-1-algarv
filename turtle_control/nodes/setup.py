@@ -4,11 +4,9 @@ import rospy
 from turtlesim.srv import TeleportAbsolute
 from turtlesim.srv import TeleportRelative
 from turtlesim.srv import SetPen
-#from std_srvs.srv import Empty
+from std_srvs.srv import Empty
 
-
-def main():
-    rospy.init_node('draw')
+def draw_waypoints(req):
     pts = rospy.get_param("/waypoints")
     jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
     setpen = rospy.ServiceProxy("/turtle1/set_pen",SetPen)
@@ -32,12 +30,13 @@ def main():
         setpen(255,0,0,2,0)
         jump(x+.5,y-.5,0)
         setpen(255,0,0,2,1)
-    
     jump(5.5,5.5,0)
     setpen(0,255,0,2,0)
 
+def main():
+    rospy.init_node('draw')
+    s = rospy.Service('draw',Empty,draw_waypoints)
+
 if __name__ == '__main__':
-    try:
-        main()
-    except rospy.ROSInterruptException:
-        pass
+    main()
+    rospy.spin()
