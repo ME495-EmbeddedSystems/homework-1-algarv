@@ -4,27 +4,26 @@ import rospy
 import math
 from turtlesim.srv import TeleportAbsolute
 from turtlesim.msg import Pose
+from Start.srv import Start
 
-def main():
-    rospy.init_node('follow')
+dist_thresh = .5
+
+def callback(data):
+    rospy.loginfo(data)
+    x = Pose.x
+    y = Pose.y
     pts = rospy.get_param("/waypoints")
+    start = rospy.ServiceProxy("/turtle_control/Start",Start)
     jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
-    pose = rospy.get_param("/turtle1/Pose", Pose)
     for j in range(len(pts)):
-        x = pts[j][0]
-        y = pts[j][1]
-        target_x = pose.x
-        target_y = pose.y
+        jump(0,0,0)
+        target_x = pts[j][0]
+        target_y = pts[j][1]
         dist = math.sqrt((target_x-x)**2+(target_y-y)**2)
-        while dist > .5:
+        while dist > dist_thresh:
             jump(x-.1,y-.1,0)
 
-    
-         
-    
-
 if __name__ == '__main__':
-    try:
-        main()
-    except rospy.ROSInterruptException:
-        pass
+    rospy.init_node('follow')
+    rospy.Subscriber('/turtle1/Pose',Pose,callback)
+    rospy.spin()

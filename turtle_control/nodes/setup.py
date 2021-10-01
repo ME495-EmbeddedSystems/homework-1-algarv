@@ -34,7 +34,7 @@ def main():
         setpen(255,0,0,2,1)
     
     jump(5.5,5.5,0)
-    rospy.spin()
+    setpen(0,255,0,2,0)
 
 if __name__ == '__main__':
     try:

@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+
+float64 x
+float64 y
+
+---
+
+float64 dist
