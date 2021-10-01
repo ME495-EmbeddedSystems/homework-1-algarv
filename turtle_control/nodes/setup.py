@@ -4,7 +4,7 @@ import rospy
 from turtlesim.srv import TeleportAbsolute
 from turtlesim.srv import TeleportRelative
 from turtlesim.srv import SetPen
-from std_srvs.srv import Empty
+from std_srvs.srv import Empty, EmptyResponse
 
 def draw_waypoints(req):
     pts = rospy.get_param("/waypoints")
@@ -32,6 +32,8 @@ def draw_waypoints(req):
         setpen(255,0,0,2,1)
     jump(5.5,5.5,0)
     setpen(0,255,0,2,0)
+
+    return EmptyResponse()
 
 def main():
     rospy.init_node('draw')
