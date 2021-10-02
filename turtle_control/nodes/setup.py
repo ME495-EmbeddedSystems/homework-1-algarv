@@ -4,6 +4,7 @@ import rospy
 from turtlesim.srv import TeleportAbsolute
 from turtlesim.srv import TeleportRelative
 from turtlesim.srv import SetPen
+from turtlesim.msg import Pose
 from std_srvs.srv import Empty, EmptyResponse
 
 def draw_waypoints(req):
@@ -33,11 +34,17 @@ def draw_waypoints(req):
     jump(5.5,5.5,0)
     setpen(0,255,0,2,0)
 
+    #for i in range(0,len(pts)):
+    #    x = pts[i][0]
+    #    y = pts[i][1]
+    #    jump(x,y,0)
+
     return EmptyResponse()
 
 def main():
     rospy.init_node('draw')
     s = rospy.Service('draw',Empty,draw_waypoints)
+
 
 if __name__ == '__main__':
     main()

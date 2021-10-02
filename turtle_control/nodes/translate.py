@@ -11,6 +11,6 @@ def translate(data):
 
 if __name__ == '__main__':
     rospy.init_node('translate')
-    rospy.Subscriber('turtle_control/turtle_cmd',TurtleVelocity,translate)
-    s = rospy.Service('translate',Empty,translate)
+    rospy.Subscriber('turtle_cmd',TurtleVelocity,translate)
+
     rospy.spin()
