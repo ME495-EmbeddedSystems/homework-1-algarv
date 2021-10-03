@@ -10,48 +10,59 @@ from std_srvs.srv import Empty
 from turtle_control.srv import Start
 from turtle_control.msg import TurtleVelocity
 
-dist_thresh = .5 ##this should be a private parameter##
+dist_thresh = .1 ##this should be a private parameter##
+
 
 def move_to_waypoint(req): 
-
     rospy.loginfo(req)
-
-    print("Fuck")
 
     x = req.x
     y = req.y
     theta = req.theta
-
     pts = rospy.get_param("/waypoints")
-    jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
 
-    try: 
+    try:
         target_x = pts[i][0]
         target_y = pts[i][1]
+        print("Updated target")
     except:
         i = 0
-        target_x = pts[0][0]
-        target_y = pts[0][1]
+        target_x = pts[i][0]
+        target_y = pts[i][1]
+        print("Did not update target")
 
     target_theta = math.atan2((target_y-y),(target_x-x))
     dist = math.sqrt((target_x-x)**2+(target_y-y)**2)
-        
+
     pub = rospy.Publisher('turtle_cmd',TurtleVelocity,queue_size = 10)
 
-    print('Target Theta:', target_theta)
-        
+    print("X: ", x)
+    print("Y: ", y)
+    print("Theta: ", theta)
+    print("Dist: ", dist)
+
     if abs(theta - target_theta)>.1:
-        pub.publish(x_velocity = 0, angular_velocity = 1)
+        angle = 0
+        pub.publish(x_velocity = 0, angular_velocity = .5)
     else:
-        pub.publish(x_velocity = 0, angular_velocity = 0)
+        angle = 1
     
-    if abs(theta - target_theta)>.1:
-        print("Let's go!")
-    elif dist > dist_thresh:
+    if angle == 1 and dist > dist_thresh:
         pub.publish(x_velocity = 10, angular_velocity = 0)
+    elif angle == 0:
+        pub.publish(x_velocity = 0, angular_velocity = .5)
     else:
+        angle = 0
         i = i + 1
-        pub.publish(x_velocity = 0, angular_velocity = 0)
+        print("Counter: ", i)
+        target_x = pts[i][0]
+        target_y = pts[i][1]
+        target_theta = math.atan2((target_y-y),(target_x-x))
+        dist = math.sqrt((target_x-x)**2+(target_y-y)**2)
+        print(target_x)
+        print(target_y)
+        print(target_theta)
+        print(dist)
 
 
 def restart(data):
@@ -61,9 +72,7 @@ def restart(data):
     start_x = data.start_x
     start_y = data.start_y
 
-    print("Fuck")
     pts = rospy.get_param("/waypoints")
-    print(pts)
 
     total_distance = 0
 
