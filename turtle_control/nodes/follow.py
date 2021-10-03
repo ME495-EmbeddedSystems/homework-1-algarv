@@ -43,9 +43,9 @@ def move_to_waypoint(req):
 
     if dist > dist_thresh:
         if abs(theta - target_theta)>.1:
-            pub.publish(x_velocity = 0, angular_velocity = 1)
+            pub.publish(x_velocity = 0, angular_velocity = 3)
         else:
-                pub.publish(x_velocity = 5, angular_velocity = 0)
+            pub.publish(x_velocity = 5, angular_velocity = 0)
     else:
         if i >= len(pts)-1:
             i = 0
