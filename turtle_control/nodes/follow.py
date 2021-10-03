@@ -12,7 +12,7 @@ from std_srvs.srv import Empty
 from turtle_control.srv import Start
 from turtle_control.msg import TurtleVelocity
 
-dist_thresh = .05 ##this should be a private parameter##
+#dist_thresh = .05 ##this should be a private parameter##
 
 
 def move_to_waypoint(req): 
@@ -23,6 +23,8 @@ def move_to_waypoint(req):
     y = req.y
     theta = req.theta
     pts = rospy.get_param("/waypoints")
+
+    dist_thresh = rospy.get_param("/dist_thresh")
 
     target_x = pts[i][0]
     target_y = pts[i][1]
