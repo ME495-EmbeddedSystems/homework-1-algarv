@@ -45,6 +45,7 @@ from turtle_control.msg import TurtleVelocity
 def move_to_waypoint(Pose): 
     rospy.loginfo(Pose)
     global i
+    global run_count
 
     x = Pose.x
     y = Pose.y
@@ -78,12 +79,13 @@ def move_to_waypoint(Pose):
     else:
         if i >= len(pts)-1:
             i = 0
+            run_count = run_count + 1
         else:
             i = i + 1
         print("Counter: ", i)
 
 
-#Takes an input from the start service call for the starting coordinate of the turtle. 
+#Takes argument from the input from the start service call for the starting coordinate of the turtle. 
 #Sends the turtle to the inputed start coordinates, sets the pen to draw, and calculates then returns the total distance to travel 
     #from the starting point to each of the waypoints (pulled from the waypoints parameter). 
 def restart(start_input):
@@ -98,7 +100,9 @@ def restart(start_input):
     setpen(0,255,0,2,0)
 
     global i
+    global run_count
     i = 0
+    run_count = 1
     rospy.Subscriber('/turtle1/pose',Pose,move_to_waypoint)
     
     pts = rospy.get_param("/waypoints")
