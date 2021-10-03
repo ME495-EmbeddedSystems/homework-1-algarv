@@ -1,27 +1,54 @@
 #!/usr/bin/env python
 
+## FOLLOW NODE ##
+'''
+The follow node calls the draw service to set-up the waypoints for the turtle, then waits for the restart paramter to be called to set the turtle
+at the given starting coordinates and finally directing it to each waypoint. 
+
+Service Calls:
+    Name: /draw Type: /std_srvs.srv/Empty ~ Sends the turtle to each waypoint and draws an X
+
+    Name: /turtle1/teleport_absolute Type: turtlesim/TeleportAbsolute ~ Make the turtle jump to a new position 
+
+    Name: /turtle1/set_pen Type: turtlesim/SetPen ~ Toggles the pen function and sets color and width
+
+Custom Services:
+    Name: /restart Type: turtle_control/Start ~ Moves the turtle to the given starting coordinates and calculates the total travel distance 
+
+Subscribers:
+    Name: /pose Type: turtlesim/Pose ~ Returns the current turtle position
+
+Publishers:
+    Name: turtle_cmd Type: turtlesim/TurtleVelocity ~ Gives the turtle a linear and angular velocity
+
+Parameters: 
+    Name: /waypoints ~ Waypoint coordinates
+
+    Name: /dist_thresh ~ Distance threshold value
+'''
+
+
 from os import setgroups
 import rospy
 import math
 from turtlesim.srv import TeleportAbsolute
-from turtlesim.srv import TeleportRelative
 from turtlesim.msg import Pose 
-from turtlesim.srv import Spawn
 from turtlesim.srv import SetPen
 from std_srvs.srv import Empty
 from turtle_control.srv import Start
 from turtle_control.msg import TurtleVelocity
 
-#dist_thresh = .05 ##this should be a private parameter##
-
-
-def move_to_waypoint(req): 
-    rospy.loginfo(req)
+#Called from the restart function.
+#Takes argument from Pose topic, and extracts the x, y, and theta positions which will constantly update. 
+#Uses waypoints parameters as the target coordinates and calculates the distance away using the Pose values.
+#Determines the necessary motions and publishes a cooresponding velocity to TurtleVelocity.
+def move_to_waypoint(Pose): 
+    rospy.loginfo(Pose)
     global i
 
-    x = req.x
-    y = req.y
-    theta = req.theta
+    x = Pose.x
+    y = Pose.y
+    theta = Pose.theta
     pts = rospy.get_param("/waypoints")
 
     dist_thresh = rospy.get_param("/dist_thresh")
@@ -56,13 +83,16 @@ def move_to_waypoint(req):
         print("Counter: ", i)
 
 
-def restart(data):
-    rospy.loginfo(data)
+#Takes an input from the start service call for the starting coordinate of the turtle. 
+#Sends the turtle to the inputed start coordinates, sets the pen to draw, and calculates then returns the total distance to travel 
+    #from the starting point to each of the waypoints (pulled from the waypoints parameter). 
+def restart(start_input):
+    rospy.loginfo(start_input)
     jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
     setpen = rospy.ServiceProxy("/turtle1/set_pen",SetPen)
 
-    start_x = data.start_x
-    start_y = data.start_y
+    start_x = start_input.start_x
+    start_y = start_input.start_y
 
     jump(start_x,start_y,0)
     setpen(0,255,0,2,0)
@@ -97,9 +127,6 @@ def main():
     draw()
 
     rospy.Service('restart',Start,restart)
-
-    pub = rospy.Publisher('turtle_cmd',TurtleVelocity,queue_size = 10)
-
 
 
 
