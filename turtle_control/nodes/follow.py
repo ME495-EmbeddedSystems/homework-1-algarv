@@ -10,59 +10,46 @@ from std_srvs.srv import Empty
 from turtle_control.srv import Start
 from turtle_control.msg import TurtleVelocity
 
-dist_thresh = .1 ##this should be a private parameter##
+dist_thresh = .05 ##this should be a private parameter##
 
 
 def move_to_waypoint(req): 
     rospy.loginfo(req)
+    global i 
 
     x = req.x
     y = req.y
     theta = req.theta
     pts = rospy.get_param("/waypoints")
 
-    try:
-        target_x = pts[i][0]
-        target_y = pts[i][1]
-        print("Updated target")
-    except:
-        i = 0
-        target_x = pts[i][0]
-        target_y = pts[i][1]
-        print("Did not update target")
+    target_x = pts[i][0]
+    target_y = pts[i][1]
 
     target_theta = math.atan2((target_y-y),(target_x-x))
     dist = math.sqrt((target_x-x)**2+(target_y-y)**2)
 
     pub = rospy.Publisher('turtle_cmd',TurtleVelocity,queue_size = 10)
 
-    print("X: ", x)
-    print("Y: ", y)
+    print("Target X:", target_x)
+    print("Target_Y", target_y)
+    print("Target Theta: ", target_theta)
+    print("Target Dist: ", dist)
+
     print("Theta: ", theta)
     print("Dist: ", dist)
-
-    if abs(theta - target_theta)>.1:
-        angle = 0
-        pub.publish(x_velocity = 0, angular_velocity = .5)
-    else:
-        angle = 1
     
-    if angle == 1 and dist > dist_thresh:
-        pub.publish(x_velocity = 10, angular_velocity = 0)
-    elif angle == 0:
-        pub.publish(x_velocity = 0, angular_velocity = .5)
+
+    if dist > dist_thresh:
+        if abs(theta - target_theta)>.1:
+            pub.publish(x_velocity = 0, angular_velocity = 1)
+        else:
+                pub.publish(x_velocity = 5, angular_velocity = 0)
     else:
-        angle = 0
-        i = i + 1
+        if i >= len(pts)-1:
+            i = 0
+        else:
+            i = i + 1
         print("Counter: ", i)
-        target_x = pts[i][0]
-        target_y = pts[i][1]
-        target_theta = math.atan2((target_y-y),(target_x-x))
-        dist = math.sqrt((target_x-x)**2+(target_y-y)**2)
-        print(target_x)
-        print(target_y)
-        print(target_theta)
-        print(dist)
 
 
 def restart(data):
@@ -101,6 +88,10 @@ def main():
     rospy.Service('restart',Start,restart)
 
     pub = rospy.Publisher('turtle_cmd',TurtleVelocity,queue_size = 10)
+    
+    rospy.wait_for_service('restart')
+    global i
+    i = 0
     rospy.Subscriber('/turtle1/pose',Pose,move_to_waypoint)
 
 
