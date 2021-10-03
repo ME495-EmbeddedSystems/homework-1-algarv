@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+from os import setgroups
 import rospy
 import math
 from turtlesim.srv import TeleportAbsolute
 from turtlesim.srv import TeleportRelative
 from turtlesim.msg import Pose 
 from turtlesim.srv import Spawn
+from turtlesim.srv import SetPen
 from std_srvs.srv import Empty
 from turtle_control.srv import Start
 from turtle_control.msg import TurtleVelocity
@@ -15,7 +17,7 @@ dist_thresh = .05 ##this should be a private parameter##
 
 def move_to_waypoint(req): 
     rospy.loginfo(req)
-    global i 
+    global i
 
     x = req.x
     y = req.y
@@ -53,12 +55,20 @@ def move_to_waypoint(req):
 
 
 def restart(data):
-
     rospy.loginfo(data)
+    jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
+    setpen = rospy.ServiceProxy("/turtle1/set_pen",SetPen)
 
     start_x = data.start_x
     start_y = data.start_y
 
+    jump(start_x,start_y,0)
+    setpen(0,255,0,2,0)
+
+    global i
+    i = 0
+    rospy.Subscriber('/turtle1/pose',Pose,move_to_waypoint)
+    
     pts = rospy.get_param("/waypoints")
 
     total_distance = 0
@@ -84,15 +94,10 @@ def main():
     draw = rospy.ServiceProxy('draw',Empty)
     draw()
 
-
     rospy.Service('restart',Start,restart)
 
     pub = rospy.Publisher('turtle_cmd',TurtleVelocity,queue_size = 10)
-    
-    rospy.wait_for_service('restart')
-    global i
-    i = 0
-    rospy.Subscriber('/turtle1/pose',Pose,move_to_waypoint)
+
 
 
 

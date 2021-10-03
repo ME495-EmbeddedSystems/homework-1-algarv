@@ -31,13 +31,6 @@ def draw_waypoints(req):
         setpen(255,0,0,2,0)
         jump(x+.5,y-.5,0)
         setpen(255,0,0,2,1)
-    jump(5.5,5.5,0)
-    setpen(0,255,0,2,0)
-
-    #for i in range(0,len(pts)):
-    #    x = pts[i][0]
-    #    y = pts[i][1]
-    #    jump(x,y,0)
 
     return EmptyResponse()
 
