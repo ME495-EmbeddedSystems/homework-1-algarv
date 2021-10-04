@@ -5,7 +5,7 @@
 
 This package draws given waypoints, then waits for a service call with a start position to send the turtle to each waypoint.
 
-To run this package, launch the launchfile run_waypoints.launch from the turtle_control directory, then call the /restart service and input the starting coordinates.
+To run this package, launch the launchfile run_waypoints.launch, then call the /restart service and input the starting coordinates.
 
     roslaunch turtle_control run_waypoints.launch
 
