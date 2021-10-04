@@ -1,1 +1,2 @@
+#List of waypoints for the turtle to travel to. The turtle will follow the points in the order of their list indices.
 waypoints: [[1,5],[5,9],[9,5],[6,2],[4,4],[6,6]]

@@ -9,7 +9,7 @@ Unless otherwise specified, list the command and all arguments that you passed t
 1. Compile the workspace by executing `catkin_make`
 2. Initialize the ROS environment (i.e., set the necessary ROS environment variables) by executing `source devel/setup.bash`
 3. Make sure no other ROS nodes are running prior to starting. 
-3. Run the launchfile `crazy_turtle` by executing `roslaunch crazy_turtle go_crazy_turtle.launch`
+3. Run the launchfile `/home/algarverick/ME_495/homework_1/src/crazy_turtle/launch` by executing `roslaunch crazy_turtle go_crazy_turtle.launch`
 4. When running you can see a visual depiction of the ROS graph using the `rqt_graph` command.
    The ROS graph, including all topics and node labels, looks like:
 ![${The ROS Graph}](rqt_graph.png)
