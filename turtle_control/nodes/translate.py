@@ -16,8 +16,10 @@ import rospy
 from geometry_msgs.msg import Twist, Vector3
 from turtle_control.msg import TurtleVelocity
 
-#Recieves an argument from the velocity sent from the follow node, and publishes a reorganized value to Twist
 def translate(velocity_input):
+    '''
+    Recieves an argument from the velocity sent from the follow node, and publishes a reorganized value to Twist
+    '''
     rospy.loginfo(velocity_input)
     pub = rospy.Publisher('turtle1/cmd_vel',Twist,queue_size = 10)
     twist_value = Twist(Vector3(x=velocity_input.x_velocity,y=0,z=0),Vector3(x=0,y=0,z=velocity_input.angular_velocity))

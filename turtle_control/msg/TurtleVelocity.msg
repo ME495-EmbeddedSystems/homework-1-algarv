@@ -1,2 +1,2 @@
-float64 x_velocity
-float64 angular_velocity
+float64 x_velocity #the linear velocity published in the move_to_waypoint function to be called by the translate node
+float64 angular_velocity #the angular velocity published in the move_to_waypoint function to be called by the translate node

@@ -38,11 +38,13 @@ from std_srvs.srv import Empty
 from turtle_control.srv import Start
 from turtle_control.msg import TurtleVelocity
 
-#Called from the restart function.
-#Takes argument from Pose topic, and extracts the x, y, and theta positions which will constantly update. 
-#Uses waypoints parameters as the target coordinates and calculates the distance away using the Pose values.
-#Determines the necessary motions and publishes a cooresponding velocity to TurtleVelocity.
 def move_to_waypoint(Pose): 
+    '''
+    Called from the restart function.
+    Takes argument from Pose topic, and extracts the x, y, and theta positions which will constantly update. 
+    Uses waypoints parameters as the target coordinates and calculates the distance away using the Pose values.
+    Determines the necessary motions and publishes a cooresponding velocity to TurtleVelocity.
+    '''
     rospy.loginfo(Pose)
     global i
     global run_count
@@ -85,10 +87,13 @@ def move_to_waypoint(Pose):
         print("Counter: ", i)
 
 
-#Takes argument from the input from the start service call for the starting coordinate of the turtle. 
-#Sends the turtle to the inputed start coordinates, sets the pen to draw, and calculates then returns the total distance to travel 
-    #from the starting point to each of the waypoints (pulled from the waypoints parameter). 
+
 def restart(start_input):
+    '''
+    Takes argument from the input from the start service call for the starting coordinate of the turtle. 
+    Sends the turtle to the inputed start coordinates, sets the pen to draw, and calculates then returns the total distance to travel 
+        from the starting point to each of the waypoints (pulled from the waypoints parameter). 
+    '''
     rospy.loginfo(start_input)
     jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
     setpen = rospy.ServiceProxy("/turtle1/set_pen",SetPen)

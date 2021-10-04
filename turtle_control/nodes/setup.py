@@ -26,9 +26,11 @@ from turtlesim.srv import SetPen
 from std_srvs.srv import Empty, EmptyResponse
 
 
-#Draw_waypoints takes no arguments but uses the waypoints parameters to send the turtle to each set of coordinates
-#and draws 4 line segments from the center to make an X
 def draw_waypoints(req):
+    '''
+    Takes no arguments but uses the waypoints parameters to send the turtle to each set of coordinates
+    to draw 4 line segments and make an X
+    '''
     pts = rospy.get_param("/waypoints")
     jump = rospy.ServiceProxy("/turtle1/teleport_absolute",TeleportAbsolute)
     setpen = rospy.ServiceProxy("/turtle1/set_pen",SetPen)
