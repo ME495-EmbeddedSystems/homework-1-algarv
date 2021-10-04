@@ -54,7 +54,7 @@ def move_to_waypoint(Pose):
     theta = Pose.theta
     pts = rospy.get_param("/waypoints")
 
-    dist_thresh = rospy.get_param("/dist_thresh")
+    dist_thresh = rospy.get_param("~dist_thresh")
 
     target_x = pts[i][0]
     target_y = pts[i][1]
