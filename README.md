@@ -18,4 +18,4 @@ Alternatively, after running the launch file, the translate node may be killed t
 ![Turtle_Control Gif](turtle_control.gif)
 
 Full video: 
-https://youtu.be/vlPdNbGtckgk
+https://youtu.be/BxF9fz73CeQ
