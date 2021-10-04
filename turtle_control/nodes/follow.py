@@ -72,6 +72,7 @@ def move_to_waypoint(Pose):
     print("Theta: ", theta)
     print("Dist: ", dist)
     
+    setpen = rospy.ServiceProxy("/turtle1/set_pen",SetPen)
 
     if dist > dist_thresh:
         if abs(theta - target_theta)>.1:
@@ -81,8 +82,10 @@ def move_to_waypoint(Pose):
     else:
         if i >= len(pts)-1:
             i = 0
+            setpen(0,255,0,2,1)
             run_count = run_count + 1
         else:
+            setpen(0,255,0,2,0)
             i = i + 1
         print("Counter: ", i)
 

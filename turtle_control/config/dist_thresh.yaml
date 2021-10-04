@@ -1,2 +1,2 @@
 #Threshold distance to be used by the move_to_waypoint function in the follow node to determine when the turtle is close enough to the waypoint
-dist_thresh: .05 
+dist_thresh: .04 
