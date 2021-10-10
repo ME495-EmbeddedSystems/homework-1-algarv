@@ -80,7 +80,7 @@ If the nodes launched from the `launchfile` are not running, you will get incorr
     ```
 
 ## Package and Dependencies
-11. Use the ROS command `rossrv list | grep crazy_turtle` to list the types of services defined by `crazy_turtle`
+11. Use the ROS command `rossrv list | grep crazy_turtle` (good application of bash knowledge.  the feature is also built in: `rossrv package crazy_turtle`) is built in) to list the types of services defined by `crazy_turtle`
     The output of the command looks like
     ```
     crazy_turtle/Switch

@@ -5,10 +5,10 @@ Publishes twist that will move a robot back and forth in the {x} direction
 while randomly providing a `angular` velocity about the {z-axis}.
 
 PUBLISHERS:
-  + Topic Name: {turtle1/cmd_vel} Message Type: {geometry_msgs} ~ the velocity of an erratic turtle path
+  + cmd_vel (geometry_msgs/Twist) ~ the velocity of an erratic turtle path
 
 SERVICES:
-  + Topic Name: {mover/get_loggers} Service Type: {roscpp/GetLoggers} ~ position of the new turtle
+  + switch (crazy_turtle/Switch) ~ mix up the position of the turtle
 
 """
 

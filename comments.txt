@@ -1,0 +1,42 @@
+17.6/18
+To see my changes: use git diff --word-diff main graded
+To merge my changes: (from main branch) git merge graded
+To delete graded branch locally: git branch -d graded
+To delete graded branch remotely: git push -d origin graded
+
+
+
+Guidelines: 2/2
+README.md has your name?
+README.md Uses Markdown properly?
+
+repository structure correct?
+
+.vscode not in repository?    
+.pyc files not in repository?
+build/ devel in repository?
+
+
+    
+Part 1:        4.8/5
+inspection.md  (no points off, but see inline comments)
+nodes/mover (incorrect service identified)
+
+
+Part 2 Turtle Control 10.8/11
+1. catkin_lint
+2. catkin_make
+3. roslaunch turtle_control run_waypoints.launch
+4. rosservice call /draw "{}"
+5. rosservice call /restart "x: 8.0 y: 5.0"
+   - Your algorithm does not seem to like starting with y = 5.0 for these waypoints.
+     The turtle moves in fits and starts, and spins around, but it eventually gets there,
+     Good overall structure, just needs a little tuning when the y coordinate is exactly the same as a waypoint
+6. rosservice call /restart "x: 2.0 y: 2.0"
+
+nodes/follow:
+nodes/setup
+launch/run_waypoints.launch
+    dist_thresh is set?
+    waypoints are loaded?
+package.xml
